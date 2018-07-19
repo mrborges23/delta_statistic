@@ -1,4 +1,7 @@
-setwd("/home/rui/Dropbox/Manuscript_delta/Revised manuscript/Data")
+# Before starting:
+#1. make sure you have installed the "ape" package.
+#2. the file code.R is in the working directory.
+
 library("ape")
 source("code.R")
 
