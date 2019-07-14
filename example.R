@@ -48,7 +48,7 @@ trait <- c(2,3,1,3,3,3,3,2,2,3,1,2,1,2,3,1,2,3,1,2)
 
 #CALCULATE DELTA B
 deltaB <-  delta(trait,tree,lambda0,se,sim,thin,burn)
-print(deltaA)
+print(deltaB)
 
 #DRAW THE TREE...
 ar <- ace(trait,tree,type="discret",method="ML",model="ARD")$lik.anc
