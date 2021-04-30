@@ -1,16 +1,17 @@
 # Delta statistic
 
-Codes for calculating $\delta$, a phylogenetic analog of the Shannon entropy for measuring the degreed of phylogenetic signal between a categorical trait (trait vector) and a phylogeny (metric-tree). 
+Scripts for calculating <img src="https://render.githubusercontent.com/render/math?math=\delta">, a phylogenetic analog of the Shannon entropy for measuring the degreed of phylogenetic signal between a categorical trait (trait vector) and a phylogeny (metric-tree). 
 
 ## Tutorial
 
-Make sure you have the ```ape``` package instaled before running the examples or using these scripts.
+Make sure you have the ```ape``` package installed before running the examples or using these scripts. Also, load the ```code.R```.
 
 ```
 library(ape)
+source(code.R)
 ```
 
-Upload your phylogetic tree. We exemplify with the newick format:
+Upload your phylogenetic tree. We exemplify with the newick format:
 
 ```
 newick_tree <- "PASTE_NETWICK_TREE_HERE"
@@ -25,7 +26,7 @@ It is important to guarantee that all the branches are positive as this method r
 tree$edge.length[tree$edge.length==0] <- quantile(tree$edge.length,0.1)*0.1
 ```
 
-Now, we need to defined the trait vector. Confirm that the trait order follows the species order in the tree; # you can see the species order by typing: ```
+Now, we need to define the trait vector. Confirm that the trait order follows the species order in the tree; # you can see the species order by typing: ```
 tree$tip.label```.
 
 ```
@@ -38,9 +39,9 @@ Now, we calculate delta:
 deltaA <- delta(trait,tree,0.1,0.0589,10000,10,100)
 ```
 
-When running the ```delta``` function you may experience this warning message: ```Warning message: In sqrt(diag(solve(h))) : NaNs produced```. Don't worry about it, it just tells me that the standard deviations of some of your rate parameters could not be calculated and these aren't used anyways.
+When running the ```delta``` function you may experience this warning message: ```Warning message: In sqrt(diag(solve(h))) : NaNs produced```. Don't worry about it; it just tells me that the standard deviations of some of your rate parameters could not be calculated, and these aren't used anyways.
 
-We can also calculate p-values. Here, we shuffle the trait vector using the function delta (for 100 iterates) and create a vector of random deltas that will work as our null hypothesis. Then we compute the probability p(random_delta>deltaA) in the null distribution which returns the p-value.
+We can also calculate p-values. Here, we shuffle the trait vector using the function delta (for 100 iterates) and create a vector of random deltas that will work as our null hypothesis. Then we compute the probability p(random_delta>deltaA) in the null distribution, which returns the p-value.
 
 ```
 random_delta <- rep(NA,100)
@@ -53,10 +54,9 @@ boxplot(random_delta)
 abline(h=deltaA,col="red")
 ```
 
-* if p-value < level_of_test (generally 0.05) there is evidence of phylogenetic signal between the trait and the character
+* if p-value < level_of_test (generally 0.05), there is evidence of phylogenetic signal between the trait and the character
 * if p-value > level_of_test there is no evidence for phylogenetic signal or the trait is saturated
 
-etic signal
 
 ## Citation
 
