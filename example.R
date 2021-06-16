@@ -59,3 +59,16 @@ for ( i in 1:ns) {  mtrait[i,trait[i]] <- 1 }
 tiplabels(pie=mtrait,cex=0.5)
 
 
+###############################
+# EXAMPLE USING PARALLELIZATION
+###############################
+trait <- c(2,1,3,1,1,3,1,3,2,1,1,2,2,2,2,1,1,3,1,1)
+library(parallel)
+
+pvalue_reps=100
+cpus=detectCores()
+message(paste("CPUs:", cpus))
+
+res <- deltaA <- delta_pvalue_parallel(trait, tree, lambda0, se, sim, thin, burn, pvalue_reps, cpus)
+message(paste("delta:", res[1]))
+message(paste("pvalue:", res[2]))
