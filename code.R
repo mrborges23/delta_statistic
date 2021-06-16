@@ -196,3 +196,26 @@ delta <- function(trait, tree,lambda0,se,sim,thin,burn) {
   return(deltaA)
 }
 
+
+# A SINGLE DELTA ITERATION
+delta_rep <- function(i, trait, tree, lambda0, se, sim, thin, burn){
+	rtrait <- sample(trait)
+	return(delta(rtrait, tree, lambda0, se, sim, thin, burn))
+}
+
+# COMPUTE DELTA AND P-VALUE USING SEVERAL CPUS
+delta_pvalue_parallel <- function(trait, tree, lambda0=0.1, se=0.0589, sim=10000, thin=10, burn=100, reps=100, cpus=1){
+
+    library(parallel)
+
+    # Compute delta
+    deltaA <- delta(trait, tree, lambda0, se, sim, thin, burn)
+
+    # Compute pvalue
+    random_delta <- mclapply(seq(1:reps), delta_rep, trait, tree, lambda0, se, sim, thin, burn, mc.cores = cpus)
+    p_value <- sum(random_delta>deltaA)/length(random_delta)
+    
+    message(paste("delta", "\t", "p-value"))
+    message(paste(deltaA, "\t", p_value))
+    return(c(deltaA, p_value))
+}
